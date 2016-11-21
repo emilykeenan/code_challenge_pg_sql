@@ -60,13 +60,14 @@ img {
 }
 
 .individual-treat input {
-  width: 28rem;
+  width: 29rem;
   text-align: center;
+  margin: 5px 1rem 10px .5rem;
 }
 
 .delete {
-  margin-right: 1rem;
-  margin-left: .2rem;
+  margin-right: 1.3rem;
+  margin-left: 1rem;
 }
 
 .individual-treat {
