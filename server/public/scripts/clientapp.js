@@ -26,6 +26,10 @@ $(document).ready(function () {
     };
 
     postTreat(newTreat);
+
+    $('input').val('');
+    $('textarea').val('');
+
   });
 
   $('#treat-display').on('click', '.delete', deleteTreat);
