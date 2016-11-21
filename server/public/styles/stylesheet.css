@@ -58,3 +58,18 @@ img {
   border-radius: 1em;
   padding: 2rem;
 }
+
+.individual-treat input {
+  width: 28rem;
+  text-align: center;
+}
+
+.delete {
+  margin-right: 1rem;
+  margin-left: .2rem;
+}
+
+.individual-treat {
+  border-bottom: 1px dotted rgba(51, 195, 240, 0.48);
+  margin-bottom: 15px;
+}
