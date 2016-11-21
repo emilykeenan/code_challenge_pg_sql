@@ -110,4 +110,31 @@ router.delete('/:id', function(req, res) {
 
 }); // delete request ends
 
+router.put('/:id', function(req, res) {
+  treatID = req.params.id;
+  treat = req.body;
+
+  pg.connect(connectionString, function(err, client, done) {
+    if(err) {
+      console.log('connection error: ', err);
+      res.sendStatus(500);
+    }
+
+    client.query(
+      'UPDATE treats SET name=$1, description=$2' +
+      ' WHERE id=$3',
+      // array of values to use in the query above
+      [treat.name, treat.description, treatID],
+      function(err, result) {
+        if(err) {
+          console.log('update error: ', err);
+          res.sendStatus(500);
+        } else {
+          res.sendStatus(200);
+        }
+      });
+    }); // close connect
+
+}); // end route
+
 module.exports = router;

@@ -27,12 +27,15 @@ $(document).ready(function () {
 
     postTreat(newTreat);
 
-    $('input').val('');
-    $('textarea').val('');
+    $('#treatDescriptionInput').val('');
+    $('#treatNameInput').val('');
+    $('#treatUrlInput').val('');
 
   });
 
   $('#treat-display').on('click', '.delete', deleteTreat);
+
+  $('#treat-display').on('click', '.edit', updateTreat);
 
   /**---------- AJAX Functions ----------**/
 
@@ -100,6 +103,33 @@ function deleteTreat() {
   });
 } // end deleteTask function
 
+function updateTreat() {
+  var id = $(this).closest('.individual-treat').data('id');
+  console.log(id);
+
+  // make book object
+  var treat = {};
+  var fields = $(this).parent().children().serializeArray();
+  fields.forEach(function(field) {
+    treat[field.name] = field.value;
+  });
+  console.log(treat);
+
+  $.ajax({
+    type: 'PUT',
+    url: '/treats/' + id,
+    data: treat,
+    success: function(result) {
+      alert('Edit successful!');
+      getTreats();
+    },
+    error: function(result) {
+      alert('could not update treat!');
+    }
+  });
+
+}
+
   /** ---------- DOM Functions ----------**/
 
   function clearDom() {
@@ -130,8 +160,8 @@ function deleteTreat() {
                   '</div>' +
                   '</div>' +
                   '</div>' +
-                  '<h3>' + treat.name + '</h3>' +
-                  '<p>' + treat.description + '</p>' +
+                  '<input type="text" name="name" value="' + treat.name + '" />' +
+                  '<input type="text" name="description" value="' + treat.description + '" />' +
                   '<button class="delete">Eat Treat</button>' +
                   '<button class="edit">Edit Treat</button>' +
                   '</div>');
