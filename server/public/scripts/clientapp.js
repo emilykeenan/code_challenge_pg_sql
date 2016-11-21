@@ -28,6 +28,8 @@ $(document).ready(function () {
     postTreat(newTreat);
   });
 
+  $('#treat-display').on('click', '.delete', deleteTreat);
+
   /**---------- AJAX Functions ----------**/
 
   // GET /treats
@@ -38,7 +40,7 @@ $(document).ready(function () {
     })
     .done(function (treatArray) {
       console.log('GET /treats returned ', treatArray);
-
+      clearDom();
       $.each(treatArray, function (index, treat) {
         appendTreat(treat);
       });
@@ -77,6 +79,23 @@ $(document).ready(function () {
     });
   }
 
+  // delete treats
+function deleteTreat() {
+  var id = $(this).closest('.individual-treat').data('id');
+  console.log(id);
+
+  $.ajax({
+    type: 'DELETE',
+    url: '/treats/' + id,
+    success: function(result) {
+      getTreats();
+    },
+    error: function(result) {
+      console.log('could not delete treat.');
+    }
+  });
+} // end deleteTask function
+
   /** ---------- DOM Functions ----------**/
 
   function clearDom() {
@@ -87,6 +106,7 @@ $(document).ready(function () {
   function appendTreat(treat) {
     // append a treat to the DOM and add data attributes
     // treat-display -> treat row -> treat
+
     var $treats = $('#treat-display');
 
     var treatCount = $treats.children().children().length;
@@ -101,15 +121,15 @@ $(document).ready(function () {
                   '<img src="' + treat.pic + '" class="u-max-full-width" />' +
                   '<div class="toggle row">' +
                   '<div class="six columns">' +
-                  '<button class="edit u-full-width">Edit</button>' +
                   '</div>' +
                   '<div class="six columns">' +
-                  '<button class="delete u-full-width">Delete</button>' +
                   '</div>' +
                   '</div>' +
                   '</div>' +
                   '<h3>' + treat.name + '</h3>' +
                   '<p>' + treat.description + '</p>' +
+                  '<button class="delete">Eat Treat</button>' +
+                  '<button class="edit">Edit Treat</button>' +
                   '</div>');
 
     $treat.data('id', treat.id);
